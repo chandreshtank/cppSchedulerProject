@@ -27,6 +27,17 @@ class task {
             cout << "Task with TaskID " << id << "created with Priority " << prio << endl;
         }
 
+        // copy construtor
+        // inside the scope{} of copy construcor, the new object which is going to be the copy of the src object passed in the argument already resides. 
+        // so inside the copy constrorctor, when you use taskID or taskPrioirity, Variable and what ever would be the end value in the copy constrorcor will be the 
+        // output value of the copy constror. 
+        task (const task &cpObjectSrc)
+        {
+            cout << "Copy Constructor called" << endl ;
+            taskId = cpObjectSrc.taskId;
+            taskPriority = cpObjectSrc.taskPriority; 
+        }
+
         void printTaskDetails(task tsk)
         {
             cout << "TaskID is " << taskId << "and Priority " << tsk.taskPriority << endl;
