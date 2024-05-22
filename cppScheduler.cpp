@@ -11,9 +11,11 @@ enum TASKPRIORITY {
 } ;
 
 class task {
-    public:
         int taskId;
         TASKPRIORITY taskPriority;
+
+    public:
+
 
         task(int id): taskId(id), taskPriority(MEDIUM)
         {
