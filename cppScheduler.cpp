@@ -14,15 +14,56 @@ enum TASKPRIORITY {
 
 class Base {
 public:
-    virtual void show() {
-        std::cout << "Base class" << std::endl;
+
+    virtual void showInsideVirtual() {
+        std::cout << "\nBase class inner function" << std::endl;
+    }
+
+    void show() {
+        std::cout << "\nBase class" << std::endl;
+        showInsideVirtual();
+    }
+
+    virtual void normalPoly()  { // Override base class method
+        std::cout << "\nNormal Poly Base class" << std::endl;
+    }
+
+
+    // VERY IMPORTANT, SEE THE MAIN FUNCTION AND SAME COMMENT THERE AS WELL
+    // THIS ALSO CREATES A PROBLEM BECAUSE NOW WHEN WE CALL the delete function to remove the object
+    // When you will do this
+    // delete b;
+    // this will cause the destructor of the base class to be called so in case if you have assigned 
+    // any memory in the constructor of the derived class, When you called new Derived() -> It called 
+    // the constructor of the derived class and destructor of the derived class where you have to free that memory 
+    // That never got called 
+
+    // TO AVOID TIS< you always should make the destructor of the base class as virtual so that 
+    // Upon delete, It will call the destructor of the derived class and then it will call the destrucotr of the of the base class.
+
+    virtual ~Base()
+    {
+        cout << "\n Destructor of Base class" << endl;
     }
 };
 
 class Derived : public Base {
 public:
+
+    void showInsideVirtual() {
+        std::cout << "\nDerived class inner function class" << std::endl;
+    }
+
     void show()  { // Override base class method
-        std::cout << "Derived class" << std::endl;
+        std::cout << "\nDerived class" << std::endl;
+    }
+
+    void normalPoly()  { // Override base class method
+        std::cout << "\nNormal Poly Derived class" << std::endl;
+    }
+
+    ~Derived() {
+        cout << "\n Destructor of Derived class" << endl;
     }
 };
 
@@ -106,10 +147,26 @@ int main()
 
 
 // RUN TIME POLYMORPHISM Example
-    Base* b;
-    Derived d;
-    b = &d;
+    Base* b = new Derived();
+    
+    // This will call normalPoly of derived class
+    b->normalPoly();
+    
+    // This will call the show function of the derived class
     b->show(); // Calls Derived's show method due to virtual function
+
+    // THIS ALSO CREATES A PROBLEM BECAUSE NOW WHEN WE CALL the delete function to remove the object
+    // When you will do this
+    delete b;
+    // this will cause the destructor of the base class to be called so in case if you have assigned 
+    // any memory in the constructor of the derived class, When you called new Derived() -> It called 
+    // the constructor of the derived class and destructor of the derived class where you have to free that memory 
+    // That never got called 
+
+    // TO AVOID TIS< you always should make the destructor of the base class as virtual so that 
+    // Upon delete, It will call the destructor of the derived class and then it will call the destrucotr of the of the base class.
+    
+
     return 0;
 
 
