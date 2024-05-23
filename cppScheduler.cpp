@@ -10,6 +10,23 @@ enum TASKPRIORITY {
     HIGH = 2
 } ;
 
+#include <iostream>
+
+class Base {
+public:
+    virtual void show() {
+        std::cout << "Base class" << std::endl;
+    }
+};
+
+class Derived : public Base {
+public:
+    void show()  { // Override base class method
+        std::cout << "Derived class" << std::endl;
+    }
+};
+
+
 class task {
         int taskId;
         TASKPRIORITY taskPriority;
@@ -76,12 +93,24 @@ int main()
 
     schedulerObject.printNumOfTasks();
 
+    // The copy constrocor will be called here
     taskObj.printTaskDetails(taskObj);
 
+    // the copy constroctor will not be called here because we are passing by reference
     taskObj.modifyTaskAttr(taskObj, HIGH);
 
+    // copy constrorer will be called here. 
     taskObj.printTaskDetails(taskObj);
 
     cout << sizeof(taskObj) << " is the size of the object" ;
+
+
+// RUN TIME POLYMORPHISM Example
+    Base* b;
+    Derived d;
+    b = &d;
+    b->show(); // Calls Derived's show method due to virtual function
+    return 0;
+
 
 }
