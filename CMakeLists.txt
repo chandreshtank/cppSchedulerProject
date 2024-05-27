@@ -1,6 +1,14 @@
-cmake_minimum_required(VERSION 3.13.4)
+project(cppBasedScheduler)
 
-project(cppSchedulerProject)
+set(CMAKE_EXPORT_COMPILE_COMMANDS YES)
+set(CMAKE_CXX_STANDARD 17)
 
-add_executable(scheduler.exe cppScheduler.cpp)
-
+SET(SCH_SOURCE_FILES 
+    source/task.cpp
+    source/taskScheduler.cpp
+    cppScheduler.cpp
+    )
+    
+add_executable(scheduler.exe ${SCH_SOURCE_FILES})
+target_include_directories( scheduler.exe PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
+    )
